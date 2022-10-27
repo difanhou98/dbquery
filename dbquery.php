@@ -77,7 +77,7 @@
                 <p>Columns to Display </p>
                 <!-- Order Number -->
                 <label for="order-number">Order Number</label>
-                <input type="checkbox" id="order-number" value="orders.orderNnumber" name="display_list[]"  
+                <input type="checkbox" id="order-number" value="orders.orderNumber" name="display_list[]"  
                 <?php 
                     if (!empty($_POST['display_list']) && in_array("orders.orderNnumber", $_POST['display_list']))
                     echo 'checked="checked"';
@@ -144,7 +144,7 @@ if (isset($_POST['submit'])){
             $selected_join = " INNER JOIN orderdetails ON orders.orderNumber = orderdetails.orderNumber";
         }
         else if (str_contains($selected_column, 'products')) {
-            $selected_join = " INNER JOIN products ON orderdetails.productCode = products.productCode";
+            $selected_join = " INNER JOIN orderdetails ON orders.orderNumber = orderdetails.orderNumber INNER JOIN products ON orderdetails.productCode = products.productCode";
         }
         if (isset($_POST['order_id']) && !empty($_POST['order_id'])){
         
@@ -158,7 +158,7 @@ if (isset($_POST['submit'])){
         
         if (isset($_POST['order_id'])){
             $selected_query = "SELECT ".$selected_column. " FROM ". "orders" . $selected_join. " WHERE orders.orderNumber = " . $_POST['order_id'];
-            
+            echo $_POST['order_id'];
             echo $selected_query;
            
             $selected_result = mysqli_query($connection, $selected_query);
@@ -177,15 +177,18 @@ if (isset($_POST['submit'])){
                     echo "<td>" . $_POST['display_list'][$x] . "</td>";
                 }
                 echo "</tr><tr>";
-                //echo $columns;
-                foreach ($column as $columnItem){
+                
+                foreach ($columns as $columnItem){
                     $pos = strpos($columnItem, ".");
-                    array_push($trimColumns,substr($columnItem, $pos));
+                    array_push($trimColumns,substr($columnItem, $pos+1));
         
                 }
-                //echo $trimColumns;
+                //print out trim columns
+                echo "<pre>";
+                var_dump($trimColumns);
+                echo "</pre>";
                 while($row= mysqli_fetch_assoc($selected_result)) {
-                    for ($x = 0; $x < count($columns); $x++){
+                    for ($x = 0; $x < count($trimColumns); $x++){
                         echo "<td>" . $row['orderNumber'] . "</td>";
                     }
                 }
