@@ -1,0 +1,29 @@
+.title {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.order-param {
+  display: flex;
+  flex-direction: column;
+}
+
+.display-param {
+  display: flex;
+  flex-direction: row;
+}
+
+.item {
+  margin: 0.5rem 1rem 0 0;
+}
+
+.query-result {
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+table,
+th,
+td {
+  border: 1px solid;
+}
