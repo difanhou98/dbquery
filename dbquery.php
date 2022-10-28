@@ -44,10 +44,13 @@
         <div class="order-param">
             <p class="title">Select Order Parameters</p>
             <!-- set method and action to submit forms to the same page -->
+            <!-- https://stackoverflow.com/questions/17333901/php-form-on-submit-stay-on-same-page -->
             <form action="" method="POST">
                 <label for="order-id">Order Number: </label>
                 <select id="order-id" name="order_id">'
                 <!-- iterate through $order_number[] to display all order number in the drop-down menu -->
+                <!-- https://stackoverflow.com/questions/66036240/how-to-display-php-database-records-in-select-dropdown-list -->
+                <!-- https://www.php.net/manual/en/function.strcmp.php-->
                 <?php 
                     foreach($order_number as $orderid){
                         $selected = (strcmp($orderid, $_POST['order_id']) == 0 
@@ -209,6 +212,8 @@ if (isset($_POST['submit'])){
                 echo    "<table>
                         <tr>";
                 // iterate through display_list and trim off excessive string based on the pos of "."
+                // https://www.php.net/manual/en/function.strpos.php
+                //https://www.php.net/manual/en/function.array-push.php
                 for ($x = 0; $x < count($_POST['display_list']); $x++){
                     array_push($columns,$_POST['display_list'][$x]);
                     $columnName = substr($_POST['display_list'][$x], strpos($_POST['display_list'][$x], ".")+1);
